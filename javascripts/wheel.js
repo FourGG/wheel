@@ -23,7 +23,7 @@ var students = [
   {name: 'decide'},
   {name: 'dangerous'},
   {name: 'discuss'},
-  {name: 'famouse'},
+  {name: 'famous'},
   {name: 'fabulous'},
   {name: 'boring'},
   {name: 'delete'},
