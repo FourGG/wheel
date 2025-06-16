@@ -154,6 +154,7 @@ var wheel = {
         var utterance = new SpeechSynthesisUtterance(text);
         // กำหนดภาษาได้ เช่น 'en-US' หรือ 'th-TH' ตามที่ต้องการ
         utterance.lang = 'en-US';
+        utterance.rate = 0.7;
         speechSynthesis.speak(utterance);
       } else {
         alert('Your browser does not support Speech Synthesis.');
