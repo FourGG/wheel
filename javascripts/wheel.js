@@ -125,7 +125,7 @@ var wheel = {
     if (wheel.timerHandle == 0) {
       wheel.spinStart = new Date().getTime();
       wheel.angleCurrent = Math.random() * Math.PI * 2;
-      wheel.maxSpeed = Math.PI / (6 + (Math.random() * 5)); // Randomly vary how hard the spin is
+      wheel.maxSpeed = Math.PI / (16 + (Math.random() * 10)); // Randomly vary how hard the spin is
       wheel.frames = 0;
       wheel.timerHandle = setInterval(wheel.onTimerTick, wheel.timerDelay);
     }
