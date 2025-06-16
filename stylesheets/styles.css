@@ -224,10 +224,12 @@ header ul a strong {
 }
 
 section {
-  width:500px;
-  float:right;
-  padding-bottom:50px;
+  width: 500px;
+  margin: 0 auto;
+  padding-bottom: 50px;
+  float: none;
 }
+
 
 small {
   font-size:11px;
