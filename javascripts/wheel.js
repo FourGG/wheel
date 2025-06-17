@@ -151,29 +151,12 @@ var wheel = {
         finished = true;
       }
     }
-    function prepareTTS(text) {
-      if ('speechSynthesis' in window) {
-        utterancePrepared = new SpeechSynthesisUtterance(text);
-        utterancePrepared.lang = 'en-US';
-        utterancePrepared.rate = 0.6;
-        // ยังไม่พูดตอนนี้ แค่เตรียมไว้
-      }
-    }
 
-    function speakText(text) {
-      if ('speechSynthesis' in window && text) {
-        var utter = new SpeechSynthesisUtterance(text);
-        utter.lang = 'en-US';
-        utter.rate = 0.6;
-        speechSynthesis.speak(utter);
-      }
-    }
     wheel.angleCurrent += wheel.angleDelta;
     while (wheel.angleCurrent >= Math.PI * 2)
-      // Keep the angle in a reasonable range
       wheel.angleCurrent -= Math.PI * 2;
 
-      if (finished) {
+    if (finished) {
       clearInterval(wheel.timerHandle);
       wheel.timerHandle = 0;
       wheel.angleDelta = 0;
@@ -183,9 +166,11 @@ var wheel = {
 
       $('#counter').html((wheel.frames / duration * 1000) + ' FPS');
 
-      // ✅ เรียก TTS แยกหลังหมุนเสร็จ
+      // ✅ เรียกพูดแค่ตอนหมุนเสร็จเท่านั้น
       speakAfterSpin(winningWord);
     }
+  }
+
 
 
     /*
@@ -252,8 +237,6 @@ var wheel = {
     wheel.clear();
     wheel.drawWheel();
     wheel.drawNeedle();
-    var selectedText = wheel.getSelectedItem();
-    speakText(selectedText); // ให้พูดชื่อที่ได้หลังหมุนเสร็จ
   },
 
   clear: function () {
