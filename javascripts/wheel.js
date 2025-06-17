@@ -161,15 +161,13 @@ var wheel = {
     }
 
     function speakText(text) {
-      if ('speechSynthesis' in window) {
-        var utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.6;
-        speechSynthesis.speak(utterance);
+      if ('speechSynthesis' in window && text) {
+        var utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'en-US';
+        utter.rate = 0.6;
+        speechSynthesis.speak(utter);
       }
     }
-
-
     wheel.angleCurrent += wheel.angleDelta;
     while (wheel.angleCurrent >= Math.PI * 2)
       // Keep the angle in a reasonable range
@@ -210,19 +208,21 @@ var wheel = {
 
   initCanvas: function () {
     var canvas = $('#wheel #canvas').get(0);
+
     canvas.addEventListener('click', function () {
-      // ปลดล็อก iOS ให้ TTS ทำงาน
+      // ปลดล็อก TTS บน iPhone (คลิกครั้งแรกจะพูดเสียงเปล่าๆ เพื่อขอสิทธิ)
       if ('speechSynthesis' in window) {
-        let unlock = new SpeechSynthesisUtterance('');
-        speechSynthesis.speak(unlock);
+        let dummy = new SpeechSynthesisUtterance('');
+        speechSynthesis.speak(dummy);
       }
 
-      // สั่งให้วงล้อหมุน
+      // หมุนวงล้อ
       wheel.spin();
     }, false);
 
     wheel.canvasContext = canvas.getContext('2d');
   }
+
 
 
   initWheel: function () {
@@ -252,6 +252,8 @@ var wheel = {
     wheel.clear();
     wheel.drawWheel();
     wheel.drawNeedle();
+    var selectedText = wheel.getSelectedItem();
+    speakText(selectedText); // ให้พูดชื่อที่ได้หลังหมุนเสร็จ
   },
 
   clear: function () {
