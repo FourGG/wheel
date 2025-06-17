@@ -1,3 +1,5 @@
+var utterancePrepared = null;
+
 var students = [
   {name: 'ability'},
   {name: 'astronaut'},
@@ -149,16 +151,27 @@ var wheel = {
         finished = true;
       }
     }
+    function prepareTTS(text) {
+      if ('speechSynthesis' in window) {
+        utterancePrepared = new SpeechSynthesisUtterance(text);
+        utterancePrepared.lang = 'en-US';
+        utterancePrepared.rate = 0.6;
+        // ยังไม่พูดตอนนี้ แค่เตรียมไว้
+      }
+    }
 
     function speakText(text) {
       if ('speechSynthesis' in window) {
-        var utterance = new SpeechSynthesisUtterance(text);
-        // กำหนดภาษาได้ เช่น 'en-US' หรือ 'th-TH' ตามที่ต้องการ
-        utterance.lang = 'en-US';
-        utterance.rate = 0.6;
-        speechSynthesis.speak(utterance);
-      } else {
-        alert('Your browser does not support Speech Synthesis.');
+        if (utterancePrepared) {
+          utterancePrepared.text = text;
+          speechSynthesis.speak(utterancePrepared);
+          utterancePrepared = null;
+        } else {
+          var utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'en-US';
+          utterance.rate = 0.6;
+          speechSynthesis.speak(utterance);
+        }
       }
     }
 
@@ -202,7 +215,10 @@ var wheel = {
 
   initCanvas: function () {
     var canvas = $('#wheel #canvas').get(0);
-    canvas.addEventListener('mousedown', wheel.spin, false);
+    canvas.addEventListener('click', function () {
+      prepareTTS(''); // เตรียมระบบ TTS ให้พร้อม (iOS จะไม่บล็อก)
+      wheel.spin();
+    }, false);
     wheel.canvasContext = canvas.getContext('2d');
   },
 
