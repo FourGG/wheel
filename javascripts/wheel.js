@@ -162,18 +162,13 @@ var wheel = {
 
     function speakText(text) {
       if ('speechSynthesis' in window) {
-        if (utterancePrepared) {
-          utterancePrepared.text = text;
-          speechSynthesis.speak(utterancePrepared);
-          utterancePrepared = null;
-        } else {
-          var utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'en-US';
-          utterance.rate = 0.6;
-          speechSynthesis.speak(utterance);
-        }
+        var utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.6;
+        speechSynthesis.speak(utterance);
       }
     }
+
 
     wheel.angleCurrent += wheel.angleDelta;
     while (wheel.angleCurrent >= Math.PI * 2)
@@ -216,11 +211,19 @@ var wheel = {
   initCanvas: function () {
     var canvas = $('#wheel #canvas').get(0);
     canvas.addEventListener('click', function () {
-      prepareTTS(''); // เตรียมระบบ TTS ให้พร้อม (iOS จะไม่บล็อก)
+      // ปลดล็อก iOS ให้ TTS ทำงาน
+      if ('speechSynthesis' in window) {
+        let unlock = new SpeechSynthesisUtterance('');
+        speechSynthesis.speak(unlock);
+      }
+
+      // สั่งให้วงล้อหมุน
       wheel.spin();
     }, false);
+
     wheel.canvasContext = canvas.getContext('2d');
-  },
+  }
+
 
   initWheel: function () {
     shuffle(spectrum);
