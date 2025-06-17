@@ -221,7 +221,7 @@ var wheel = {
     }, false);
 
     wheel.canvasContext = canvas.getContext('2d');
-  }
+  },
 
 
 
