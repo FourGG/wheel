@@ -169,7 +169,7 @@ var wheel = {
       // ✅ เรียกพูดแค่ตอนหมุนเสร็จเท่านั้น
       speakAfterSpin(winningWord);
     }
-  }
+  },
 
 
 
@@ -178,7 +178,6 @@ var wheel = {
      var rpm = (wheel.angleDelta * (1000 / wheel.timerDelay) * 60) / (Math.PI * 2);
      $('#counter').html( Math.round(rpm) + ' RPM' );
      */
-  },
 
   init: function (optionList) {
     try {
