@@ -39,7 +39,7 @@ var shuffle = function (o) {
 };
 
 var hashCode = function (string) {
-  // See http://www.cse.yorku.ca/~oz/hash.html
+  // Seee http://www.cse.yorku.ca/~oz/hash.html
   var hash = 5381;
   for (i = 0; i < string.length; i++) {
     var char = string.charCodeAt(i);
